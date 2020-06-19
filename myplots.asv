@@ -1,0 +1,19 @@
+% CS 5810  -- Programming for data analysis 
+%
+%  Assignment 3 | Prof. Alberto Paccanaro
+% 
+%
+% 
+% Insert BELOW your code 
+
+function myplots(vec_4_func,vec_4_char,vec_4_marker)
+x = -2*pi:0.3:2*pi;
+  for i =1:4
+       subplot(2,2,i)
+       y =eval(strcat(vec_4_func{i},'(x)'))';
+       plot(x,y,'vec_4_marker(i),'MarkerEdgeColor',vec_4_char(i));
+       %hold on
+       %line(x,y)
+       xlim([-10 10])
+   end
+end

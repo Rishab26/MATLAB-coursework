@@ -1,0 +1,44 @@
+% CS 5810  -- Programming for data analysis 
+%
+%  Assignment 3 | Prof. Alberto Paccanaro
+% 
+%
+% 
+% Insert BELOW your code 
+function mykmeans(Data,n)
+data = load(Data);
+data = struct2table(data);
+data = table2array(data);
+count_rows = size(data,1);
+k = randi([1 count_rows],1,n);
+m1 = zeros(count_rows,n);
+euc_dist= @(x,y) pdist2(x,y);
+centroids = data(k,:);
+centroids_re = zeros(3,2);
+stop = false;
+i=0;
+while stop == false
+    i=i+1;
+    disp(i)
+    m1 = euc_dist(data,centroids);
+    [val,idx] = min((m1).');
+    m2 = [data (idx).'];
+    centroids_re_with_classes = splitapply(@mean, m2, m2(:,3));
+    centroids_re = centroids_re_with_classes(:,([1 2]));
+    if centroids ~= centroids_re
+        centroids = centroids_re;
+    else
+        stop = true;
+    end
+    
+end
+hold on
+for i = 1:5
+    gp = m2((m2(:,3) ==i),([1 2]));
+    scatter(gp(:,1),gp(:,2),'x')
+end
+scatter(centroids_re(:,1),centroids_re(:,2),'d','filled','r')
+hold off
+end
+
+
